@@ -38,9 +38,9 @@ $solver = new \CapSolver\CapSolver([
 
 |Option|Default value|Description|
 |---|---|---|
-|defaultTimeout|120|Polling timeout in seconds for all captcha types except ReCaptcha. Defines how long the module tries to get the answer from `res.php` API endpoint|
-|recaptchaTimeout|600|Polling timeout for ReCaptcha in seconds. Defines how long the module tries to get the answer from `res.php` API endpoint|
-|pollingInterval|10|Interval in seconds between requests to `res.php` API endpoint, setting values less than 5 seconds is not recommended|
+|defaultTimeout|120|Polling timeout in seconds for all captcha types except ReCaptcha. Defines how long the module tries to get the answer from `getTaskResult` API endpoint|
+|recaptchaTimeout|600|Polling timeout for ReCaptcha in seconds. Defines how long the module tries to get the answer from `getTaskResult` API endpoint|
+|pollingInterval|10|Interval in seconds between requests to `getTaskResult` API endpoint, setting values less than 5 seconds is not recommended|
 
 > To get the answer manually use [getResult method](#send--getresult)
 
