@@ -93,6 +93,6 @@ try {
 ```
 
 ## 📁 Examples directory
-**Figure out all the working examples [here](https://github.com/0qwertyy/capsolver-php/tree/main/examples).**
+**Figure out all the working examples [here](https://github.com/0qwertyy/capsolver-php/tree/master/examples).**
 
 [CapSolver]: https://capsolver.com/
