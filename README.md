@@ -76,7 +76,11 @@ $balance = $solver->balance();
 If case of an error captcha solver throws an exception. It's important to properly handle these cases. We recommend to use `try catch` to handle exceptions. 
 ```php
 try {
-    $result = $solver->text('If tomorrow is Saturday, what day is today?');
+    $result = $solver->recaptchav2([
+            'websiteKey'    => 'XxX-XXXXXXxXXXXXXXXXXxXXXXX',                   // grab it from target site
+            'websiteURL'    => 'https://www.mysite.com/recaptcha/api2/demo',    // grab it from target site
+            'proxy'         => 'proxy.provider.io:23331:user1:password1',       // proxy string format
+    ]);
 } catch (\CapSolver\Exception\ValidationException $e) {
     // invalid parameters passed
 } catch (\CapSolver\Exception\NetworkException $e) {
