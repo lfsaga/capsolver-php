@@ -77,6 +77,9 @@ class ApiClient
             CURLOPT_RETURNTRANSFER => 1,
             CURLOPT_TIMEOUT        => 60,
             CURLOPT_POST           => true,
+            CURLOPT_HTTPHEADER     => [
+                'Content-Type: application/json',
+            ],
             CURLOPT_POSTFIELDS     => json_encode($captcha),
         ]);
 
