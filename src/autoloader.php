@@ -1,6 +1,6 @@
 <?php
 spl_autoload_register(function ($class) {
-    $prefix = 'CapSolver\\';
+    $prefix = 'Solver\\';
 
     $len = strlen($prefix);
     if (strncmp($prefix, $class, $len) !== 0) return;

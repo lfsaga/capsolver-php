@@ -22,9 +22,20 @@ $solver = new Solver([
 ]);
 
 try {
-    $results = $solver->balance();
+    $results = $solver->task([
+        'task' => [
+            'type' => 'AntiTurnstileTaskProxyless',
+            'websiteURL' => 'https://peet.ws/turnstile-test/non-interactive.html',
+            'websiteKey' => '0x4AAAAAAABS7vwvV6VFfMcD',
+            'metadata' => [
+                'action' => 'login',
+                'cdata' => '0000-1111-2222-3333-example-cdata'
+            ]
+        ],
+        'mustPoll' => true
+    ]);
 
-    echo sprintf("Balance (USD): %.2f\n", $results);
+    echo json_encode($results, JSON_PRETTY_PRINT) . "\n";
 } catch (\Exception $e) {
     if ($e instanceof \Solver\Exceptions\SolverException) {
         echo "\033[31m" . $e->getTaskId() . " - " . $e->getErrorCode() . " - " . $e->getErrorDescription() . "\033[0m";

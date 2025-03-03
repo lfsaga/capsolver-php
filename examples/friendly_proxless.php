@@ -22,9 +22,12 @@ $solver = new Solver([
 ]);
 
 try {
-    $results = $solver->balance();
+    $results = $solver->friendlycaptchaproxyless([
+        'websiteURL' => 'https://axeptio.eu/',
+        'websiteKey' => 'FCMNR8PVIO5UHGTM'
+    ]);
 
-    echo sprintf("Balance (USD): %.2f\n", $results);
+    echo json_encode($results, JSON_PRETTY_PRINT) . "\n";
 } catch (\Exception $e) {
     if ($e instanceof \Solver\Exceptions\SolverException) {
         echo "\033[31m" . $e->getTaskId() . " - " . $e->getErrorCode() . " - " . $e->getErrorDescription() . "\033[0m";

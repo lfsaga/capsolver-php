@@ -2,24 +2,41 @@
 
 set_time_limit(610);
 
-require(__DIR__ . '/../src/autoloader.php');
+require_once __DIR__ . '/../vendor/autoload.php';
 
-$solver = new \CapSolver\CapSolver('CAI-XXX...');
+use Solver\Solver;
+use Dotenv\Dotenv;
 
 try {
-    $solution = $solver->datadome([
-        'websiteURL'    => 'https://www.pokemoncenter.com/',
-        'userAgent'    => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36',
-        'captchaUrl'    => 'https://geo.captcha-delivery.com/captcha/?initialCid=AHrlqAAAAAMAlk-FmAyNOW8AUyTH_g%3D%3D&hash=5B45875B653A484CC79E57036CE9FC&cid=noJuZstmvINksqOxaXWQogbPBd01y3VaH3r-CZ4eqK4roZuelJMHVhO2rR0IySRieoAivkg74B4UpJ.xj.jVNB6-aLaW.Bwvik7__EncryD6COavwx8RmOqgZ7DK_3v&t=fe&referer=https%3A%2F%2Fwww.pokemoncenter.com%2F&s=9817&e=2b1d5a78107ded0dcdc8317aa879979ed5083a2b3a95b734dbe7871679e14032',
-        'proxy'         => 'proxy.provider.io:23331:user1:password1',
-//        'proxyAddress'  => 'proxy.provider.io',
-//        'proxyPort'     => 23331,
-//        'proxyLogin'    => 'user1',
-//        'proxyPassword' => 'password1',
-    ]);
+    $dotenv = Dotenv::createImmutable(__DIR__ . '/..');
+    $dotenv->load();
+
+    $dotenv->required(['APIKEY', 'PROXYSTRING'])->notEmpty();
 } catch (\Exception $e) {
-    die($e);
+    echo "Error loading .env file: " . $e->getMessage() . "\n";
+    exit(1);
 }
 
-print_r($solution);
-die();
+$solver = new Solver([
+    'apiKey' => $_ENV['APIKEY']
+]);
+
+try {
+    $results = $solver->datadome([
+        'websiteURL' => 'https://allegro.pl/',
+        'userAgent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36',
+        'captchaUrl' => 'https://geo.captcha-delivery.com/captcha/?initialCid=DAVfsaHuc~1lJNTKFkZF4ix4sFDHffsYNtWio9i_1Sv9MkZ~JXR5RxmuxI76~WhiQFAs39wLpbvE8~uze6FC91XEaCCvadHZPmAUp71wrKSCShmyABxSEvLoEzSAnd66&cid=DAVfsaHuc~1lJNTKFkZF4ix4sFDHffsYNtWio9i_1Sv9MkZ~JXR5RxmuxI76~WhiQFAs39wLpbvE8~uze6FC91XEaCCvadHZPmAUp71wrKSCShmyABxSEvLoEzSAnd66&referer=https%3A%2F%2Fallegro.pl%2F&hash=77DC0FFBAA0B77570F6B414F8E5BDB&t=fe&s=29701&e=9e3ce65fd6c57373d8ff7cb729a4e78a8ed3f43d0174456e125ba4816b40b060&ir=414&dm=dc_ir',
+        'proxy' => $_ENV['PROXYSTRING']
+    ]);
+
+    echo json_encode($results, JSON_PRETTY_PRINT) . "\n";
+} catch (\Exception $e) {
+    if ($e instanceof \Solver\Exceptions\SolverException) {
+        echo "\033[31m" . $e->getTaskId() . " - " . $e->getErrorCode() . " - " . $e->getErrorDescription() . "\033[0m";
+    } else {
+        echo "Error: " . $e->getMessage() . "\n";
+    }
+    exit(1);
+}
+
+exit(0);

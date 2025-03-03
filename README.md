@@ -30,7 +30,7 @@ $solver = new Solver([
 ]);
 
 try {
-    $result = $solver->turnstileproxyless([
+    $results = $solver->turnstileproxyless([
         'websiteURL' => 'https://peet.ws/turnstile-test/non-interactive.html',
         'websiteKey' => '...',
         'metadata' => [
@@ -39,10 +39,10 @@ try {
         ]
     ]);
 
-    echo json_encode($result, JSON_PRETTY_PRINT) . "\n";
+    echo json_encode($results, JSON_PRETTY_PRINT) . "\n";
 } catch (\Exception $e) {
     if ($e instanceof \Solver\Exceptions\SolverException) {
-        echo $e->getTaskId() . " - " . $e->getErrorCode() . " - " . $e->getErrorDescription();
+        echo "\033[31m" . $e->getTaskId() . " - " . $e->getErrorCode() . " - " . $e->getErrorDescription() . "\033[0m";
     } else {
         echo "Error: " . $e->getMessage() . "\n";
     }

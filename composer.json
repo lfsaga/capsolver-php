@@ -1,50 +1,16 @@
 {
-    "name": "0qwertyy/capsolver-php",
-    "description": "PHP package for easy integration with CapSolver API",
-    "keywords": [
-        "capsolver",
-        "capsolver.com",
-        "2captcha",
-        "captcha",
-        "classification",
-        "recaptcha",
-        "funcaptcha",
-        "keycaptcha",
-        "geetest",
-        "datadome",
-        "anticaptcha",
-        "hcaptcha",
-        "classification",
-        "recaptcha v2",
-        "recaptcha v3",
-        "bypass captcha",
-        "solve captcha",
-        "captcha solver",
-        "decaptcha",
-        "2captcha.com"
-    ],
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "0qwertyy",
-            "homepage": "https://github.com/0qwertyy"
-        }
-    ],
-    "require": {
-        "php": ">=5.6",
-        "ext-curl": "*",
-        "ext-mbstring": "*",
-        "ext-fileinfo": "*",
-      "ext-json": "*"
-    },
-    "require-dev": {
-        "phpunit/phpunit": "8.5.*"
-    },
-    "autoload": {
-        "psr-4": {
-            "CapSolver\\": "src/"
-        }
-    },
-    "autoload-dev": {
+  "name": "lfsaga/capsolver-php",
+  "type": "library",
+  "require": {
+    "php": ">=7.4",
+    "guzzlehttp/guzzle": "^7.0",
+    "vlucas/phpdotenv": "^5.3"
+  },
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "Solver\\": "src/"
     }
+  },
+  "minimum-stability": "stable"
 }

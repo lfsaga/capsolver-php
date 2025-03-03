@@ -22,9 +22,12 @@ $solver = new Solver([
 ]);
 
 try {
-    $results = $solver->balance();
+    $results = $solver->recaptchav2proxyless([
+        'websiteURL' => 'https://2captcha.com/demo/recaptcha-v2',
+        'websiteKey' => '6LfD3PIbAAAAAJs_eEHvoOl75_83eXSqpPSRFJ_u'
+    ]);
 
-    echo sprintf("Balance (USD): %.2f\n", $results);
+    echo json_encode($results, JSON_PRETTY_PRINT) . "\n";
 } catch (\Exception $e) {
     if ($e instanceof \Solver\Exceptions\SolverException) {
         echo "\033[31m" . $e->getTaskId() . " - " . $e->getErrorCode() . " - " . $e->getErrorDescription() . "\033[0m";

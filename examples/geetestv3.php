@@ -6,6 +6,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 use Solver\Solver;
 use Dotenv\Dotenv;
+use GuzzleHttp\Client;
 
 try {
     $dotenv = Dotenv::createImmutable(__DIR__ . '/..');
@@ -17,14 +18,29 @@ try {
     exit(1);
 }
 
+$client = new Client();
+
+try {
+    $response = $client->get('https://segmentfault.com/gateway/geetest/token');
+    $data = json_decode($response->getBody(), true);
+
+    if (!isset($data['gt']) || !isset($data['challenge'])) {
+        throw new \Exception("Invalid response structure from API.");
+    }
+} catch (\Exception $e) {
+    echo "Error fetching Geetest token: " . $e->getMessage() . "\n";
+    exit(1);
+}
+
 $solver = new Solver([
     'apiKey' => $_ENV['APIKEY']
 ]);
 
 try {
-    $results = $solver->mtcaptcha([
-        'websiteURL' => 'https://www.mtcaptcha.com/',
-        'websiteKey' => 'MTPublic-tqNCRE0GS',
+    $results = $solver->geetest([
+        'websiteURL' => 'https://segmentfault.com/',
+        'gt' => $data['gt'],
+        'challenge' => $data['challenge'],
         'proxy' => $_ENV['PROXYSTRING']
     ]);
 

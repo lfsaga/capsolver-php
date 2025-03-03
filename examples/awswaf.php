@@ -11,7 +11,7 @@ try {
     $dotenv = Dotenv::createImmutable(__DIR__ . '/..');
     $dotenv->load();
 
-    $dotenv->required('APIKEY')->notEmpty();
+    $dotenv->required(['APIKEY', 'PROXYSTRING'])->notEmpty();
 } catch (\Exception $e) {
     echo "Error loading .env file: " . $e->getMessage() . "\n";
     exit(1);
@@ -22,9 +22,12 @@ $solver = new Solver([
 ]);
 
 try {
-    $results = $solver->balance();
+    $results = $solver->awswaf([
+        'websiteURL' => 'https://bark.com/',
+        'proxy' => $_ENV['PROXYSTRING']
+    ]);
 
-    echo sprintf("Balance (USD): %.2f\n", $results);
+    echo json_encode($results, JSON_PRETTY_PRINT) . "\n";
 } catch (\Exception $e) {
     if ($e instanceof \Solver\Exceptions\SolverException) {
         echo "\033[31m" . $e->getTaskId() . " - " . $e->getErrorCode() . " - " . $e->getErrorDescription() . "\033[0m";
